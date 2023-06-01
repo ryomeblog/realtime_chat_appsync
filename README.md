@@ -1,0 +1,2 @@
+# realtime_chat_appsync
+AppSyncを使用したリアルタイムチャットアプリサンプル
