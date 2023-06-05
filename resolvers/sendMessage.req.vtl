@@ -1,0 +1,13 @@
+
+{
+  "version": "2017-02-28",
+  "operation": "PutItem",
+  "key": {
+    "MessageID": $util.dynamodb.toDynamoDBJson($util.autoId())
+  },
+  "attributeValues": {
+    "UserID": $util.dynamodb.toDynamoDBJson($ctx.identity.sub),
+    "Message": $util.dynamodb.toDynamoDBJson($ctx.arguments.Message),
+    "Timestamp": $util.dynamodb.toDynamoDBJson($util.time.nowFormatted("yyyy-MM-dd HH:mm:ssZ"))
+  }
+}

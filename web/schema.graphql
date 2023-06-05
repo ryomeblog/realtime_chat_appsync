@@ -1,0 +1,40 @@
+# Message型はチャットメッセージを表現します。
+type Message {
+	# MessageIDは各メッセージに一意に割り当てられるIDです。
+	MessageID: String
+	# UserIDはメッセージを送信したユーザーのIDです。
+	UserID: String
+	# Timestampはメッセージが送信された時間を表すタイムスタンプです。
+	Timestamp: String
+	# Messageはメッセージの本文です。
+	Message: String
+}
+
+# Mutation型はメッセージに対する操作（送信、編集、削除）を表現します。
+type Mutation {
+	# sendMessageは新しいメッセージを送信します。必須のパラメータMessageを受け取り、送信したMessageを返します。
+	sendMessage(Message: String!): Message
+	# editMessageは既存のメッセージを編集します。メッセージのIDと新しいメッセージ内容をパラメータとして受け取り、編集されたMessageを返します。
+	editMessage(MessageID: String!, Message: String!): Message
+	# deleteMessageは既存のメッセージを削除します。削除したいメッセージのIDをパラメータとして受け取り、削除したMessageを返します。
+	deleteMessage(MessageID: String!): Message
+}
+
+# Query型はメッセージの取得操作を表現します。
+type Query {
+	# getMessageはすべてのメッセージを取得します。返り値は配列形式のMessageです。
+	getMessage: [Message]
+}
+
+# Subscription型はメッセージの送信、編集、削除が行われたときにリアルタイムで更新を受け取るための型です。
+type Subscription {
+	# messageSentは新しいメッセージが送信されたときに発火します。sendMessageミューテーションに紐付けられています。
+	messageSent: [Message]
+		@aws_subscribe(mutations: ["sendMessage"])
+	# messageEditedはメッセージが編集されたときに発火します。editMessageミューテーションに紐付けられています。
+	messageEdited: [Message]
+		@aws_subscribe(mutations: ["editMessage"])
+	# messageDeletedはメッセージが削除されたときに発火します。deleteMessageミューテーションに紐付けられています。
+	messageDeleted: [Message]
+		@aws_subscribe(mutations: ["deleteMessage"])
+}

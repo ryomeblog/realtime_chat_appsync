@@ -1,0 +1,13 @@
+{
+  "version" : "2017-02-28",
+  "operation" : "UpdateItem",
+  "key" : {
+    "MessageID": $util.dynamodb.toDynamoDBJson($ctx.arguments.MessageID)
+  },
+  "update" : {
+    "expression" : "set Message = :Message",
+    "expressionValues" : {
+      ":Message" : $util.dynamodb.toDynamoDBJson($ctx.arguments.Message)
+    }
+  }
+}
