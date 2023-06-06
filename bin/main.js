@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const cdk = require('@aws-cdk/core');
 const { ChatAppStack } = require('../lib/chat-app-stack');
 
